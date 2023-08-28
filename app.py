@@ -47,6 +47,7 @@ def pred(age, rmt, dep1):
 
 @app.route('/', methods=['POST'])
 def predict():
+    
     data = request.json
     age = data['age']
     rmt = data['rmt']
