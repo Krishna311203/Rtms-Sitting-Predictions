@@ -47,7 +47,7 @@ def pred(age, rmt, dep1):
 
 @app.route('/', methods=['POST'])
 def predict():
-    
+
     data = request.json
     age = data['age']
     rmt = data['rmt']
@@ -64,4 +64,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0',port='5000')
