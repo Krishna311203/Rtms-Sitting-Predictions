@@ -44,8 +44,11 @@ def pred(age, rmt, dep1):
     ans = [final, no_of_sessions]
     return ans
 
+@app.route('/')
+def hello_world():
+    return 'Hello World'
 
-@app.route('/', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
 
     data = request.json
