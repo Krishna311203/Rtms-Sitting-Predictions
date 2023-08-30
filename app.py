@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 import numpy as np
 from keras.models import load_model
 
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
+
 app = Flask(__name__)
 
 loaded_model1 = load_model('Depression_1.h5')
@@ -30,27 +34,31 @@ def pred(age, rmt, dep1):
     predicted_depression_1 = depression1(age, rmt, dep1)
     final = predicted_depression_1
     no_of_sessions = 10
+    ans = {'RX#10': final, 'final_depression' : final, 'no_of_session': no_of_sessions}
     
     if predicted_depression_1 > 20:
         predicted_depression_2 = depression2(age, rmt, dep1, predicted_depression_1)
         final = predicted_depression_2
         no_of_sessions = 20
+        ans['RX#20'] = final
+        ans['final_depression'] = final
         
         if predicted_depression_2 > 20:
             predicted_depression_3 = depression3(age, rmt, dep1, predicted_depression_1, predicted_depression_2)
             final = predicted_depression_3
             no_of_sessions = 30
-            
-    ans = [final, no_of_sessions]
+            ans['RX#30'] = final
+            ans['final_depression'] = final
     return ans
+
 
 @app.route('/')
 def hello_world():
-    return 'Hello World'
+    return 'Hello World' 
 
+# Create a route to handle prediction requests
 @app.route('/predict', methods=['POST'])
 def predict():
-
     data = request.json
     age = data['age']
     rmt = data['rmt']
@@ -58,13 +66,7 @@ def predict():
     
     result = pred(age, rmt, dep1)
     
-    response = {
-        "predicted_depression": result[0],
-        "no_of_sessions": result[1]
-    }
-    
-    return jsonify(response)
-
+    return jsonify(result)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port='5000')
+    app.run(debug=True)
