@@ -68,5 +68,14 @@ def predict():
     
     return jsonify(result)
 
+@app.route('/god', methods=['GET'])
+def predictgod():
+    age = int(request.args.get('age'))
+    rmt = float(request.args.get('rmt'))
+    dep1 = int(request.args.get('dep'))
+    result = pred(age, rmt, dep1)
+    
+    return jsonify(result)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
