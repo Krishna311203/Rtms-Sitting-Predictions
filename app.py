@@ -34,7 +34,7 @@ def pred(age, rmt, dep1):
     predicted_depression_1 = depression1(age, rmt, dep1)
     final = [predicted_depression_1]
     no_of_sessions = 10
-    ans = {'RX': final, 'final_depression' : final, 'no_of_session': no_of_sessions}
+    ans = {'RX': final, 'final_depression' : predicted_depression_1, 'no_of_session': no_of_sessions}
     
     if predicted_depression_1 > 20:
         predicted_depression_2 = depression2(age, rmt, dep1, predicted_depression_1)
