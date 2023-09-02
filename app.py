@@ -32,23 +32,23 @@ def depression3(age, rmt, dep, dep1, dep2):
 
 def pred(age, rmt, dep1):
     predicted_depression_1 = depression1(age, rmt, dep1)
-    final = predicted_depression_1
+    final = [predicted_depression_1]
     no_of_sessions = 10
-    ans = {'RX#10': final, 'final_depression' : final, 'no_of_session': no_of_sessions}
+    ans = {'RX': final, 'final_depression' : final, 'no_of_session': no_of_sessions}
     
     if predicted_depression_1 > 20:
         predicted_depression_2 = depression2(age, rmt, dep1, predicted_depression_1)
-        final = predicted_depression_2
+        final.append(predicted_depression_2)
         no_of_sessions = 20
-        ans['RX#20'] = final
-        ans['final_depression'] = final
+        ans['RX'] = final
+        ans['final_depression'] = predicted_depression_2
         
         if predicted_depression_2 > 20:
             predicted_depression_3 = depression3(age, rmt, dep1, predicted_depression_1, predicted_depression_2)
-            final = predicted_depression_3
+            final.append(predicted_depression_3)
             no_of_sessions = 30
-            ans['RX#30'] = final
-            ans['final_depression'] = final
+            ans['RX'] = final
+            ans['final_depression'] = predicted_depression_3
     return ans
 
 
